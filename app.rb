@@ -32,3 +32,10 @@ post('/recipes/:id') do
   @ingredients = Ingredient.all()
   redirect "/recipes/#{@recipe.id()}"
 end
+
+delete('/') do
+  @recipes = Recipe.all()
+  recipe_id = params.fetch("recipe_id").to_i()
+  Recipe.find(recipe_id).delete()
+  redirect "/"
+end

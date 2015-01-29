@@ -23,6 +23,20 @@
       <li><a href="/recipes/<%= recipe.id() %>"><%= recipe.name() %></a></li>
     <% end %>
   </ul>
+
+  <form method="post" action="/">
+    <input name="_method" type="hidden" value="delete">
+    <div class="form-group">
+      <label class="form-label" for="recipe_id">Delete this recipe:</label>
+      <select name="recipe_id">
+        <% Recipe.all().each() do |recipe| %>
+          <option value="<%= recipe.id() %>"><%= recipe.name() %></option>
+        <% end %>
+      </select>
+    </div>
+    <button type="submit" class="btn btn-danger">Delete!</button>
+  </form>
+
 <% else %>
   <p>There are no recipes yet!</p>
 <% end %>
