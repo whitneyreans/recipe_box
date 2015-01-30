@@ -10,15 +10,14 @@ get('/') do
 end
 
 post('/recipes') do
-  category = params.fetch("category")
   instructions = params.fetch("instructions")
   name = params.fetch("name")
-  @category = Category.create({:name => category})
   @recipe = Recipe.create({:name => name, :instruction => instructions })
   redirect '/'
 end
 
 get('/recipes/:id') do
+  @categories = Category.all()
   @recipes = Recipe.all()
   @recipe = Recipe.find(params.fetch("id").to_i())
   @ingredients = Ingredient.all()
@@ -26,6 +25,9 @@ get('/recipes/:id') do
 end
 
 post('/recipes/:id') do
+  # category = params.fetch("category")
+  # @category = Category.create({:name => category })
+  # @categories = Category.all()
   @recipe = Recipe.find(params.fetch("id").to_i())
   ingredient = params.fetch("ingredient")
   @ingredient = Ingredient.create({:name => ingredient, :recipe_id => @recipe.id()})
@@ -38,4 +40,11 @@ delete('/') do
   recipe_id = params.fetch("recipe_id").to_i()
   Recipe.find(recipe_id).delete()
   redirect "/"
+end
+
+post('/categories') do
+  category = params.fetch("category")
+  @recipe = Recipe.fetch()
+  url = "/recipes/" + params.fetch('recipe_id')
+  redirect(url)
 end

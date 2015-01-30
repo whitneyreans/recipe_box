@@ -1,17 +1,35 @@
 <% if @recipes.any?() %>
 <h2><%= @recipe.name() %>
-<h3>Ingredients</h3>
 
+<!-- Add multiple categories -->
+<form action="/categories" method="post">
+  <input id="recipe_id" name="recipe_id" type="hidden" value="<%= @recipe.id() %>">
+  <label for="category">Add a category:</label>
+  <input id="category" name="category" type="text">
+  <button type="submit">Add</button>
+</form>
+
+<% if @categories.any?() %>
+<h3>Categories</h3>
+<ul>
+  <% @recipe.categories.each() do |category| %>
+  <li><%= category.name() %></li>
+  <% end %>
+</ul>
+<% else %>
+<p>There are no categories</p>
+<% end %>
+
+
+<!-- Add multiple ingredients -->
 <form action="/recipes/<%= @recipe.id %>" method="post">
-    <input id="recipe_id" name="recipe_id" type="hidden" value="<%= @recipe.id() %>">
-
-
+  <input id="recipe_id" name="recipe_id" type="hidden" value="<%= @recipe.id() %>">
   <label for="ingredient">Add an ingredient:</label>
   <input id="ingredient" name="ingredient" type="text">
-
   <button type="submit">Add Ingredient</button>
 </form>
 
+<h3>Ingredients</h3>
 <ul>
   <% @recipe.ingredients.each() do |ingredient| %>
     <li><%= ingredient.name() %></li>
@@ -20,8 +38,6 @@
 <% else %>
 <p>There are no ingredients yet!</p>
 <% end %>
-
-
 
 <h3>Instructions</h3>
 <p><%= @recipe.instruction() %></p>
